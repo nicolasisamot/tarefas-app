@@ -5,13 +5,14 @@ class Tarefa extends StatefulWidget {
   int? id;
   String nome;
   String foto;
+  final VoidCallback? onDelete;
 
-  Tarefa({
-    super.key,
-    this.id,
-    required this.nome,
-    required this.foto,
-  });
+  Tarefa(
+      {super.key,
+      this.id,
+      required this.nome,
+      required this.foto,
+      this.onDelete});
 
   @override
   State<Tarefa> createState() => _TarefaState();
@@ -53,7 +54,10 @@ class _TarefaState extends State<Tarefa> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  TarefasDao.excluirRegistroPorId(widget.id!);
+                  if (widget.id != null) {
+                    TarefasDao.excluirRegistroPorId(widget.id!);
+                    widget.onDelete!();
+                  }
                 },
                 child: Icon(Icons.check)),
           ],

@@ -11,19 +11,23 @@ class TelaInicial extends StatefulWidget {
 }
 
 class _TelaInicialState extends State<TelaInicial> {
+  void atualizar() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Tarefas"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                setState(() {});
-              },
-              icon: const Icon(Icons.refresh))
-        ],
+        //  actions: [
+        //    IconButton(
+        //       onPressed: () {
+        //        setState(() {});
+        //    },
+        //  icon: const Icon(Icons.refresh))
+        //],
       ),
       body: Container(
         child: Padding(
@@ -41,7 +45,14 @@ class _TelaInicialState extends State<TelaInicial> {
                     if (snapshot.hasData && tarefas != null) {
                       return ListView.builder(
                           itemCount: tarefas.length,
-                          itemBuilder: (context, index) => tarefas[index]);
+                          itemBuilder: (context, index) {
+                            return Tarefa(
+                              id: tarefas[index].id,
+                              nome: tarefas[index].nome,
+                              foto: tarefas[index].foto,
+                              onDelete: atualizar,
+                            );
+                          });
                     }
                     return Center(
                       child: Container(
